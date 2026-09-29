@@ -1,0 +1,832 @@
+I want to build a Java project called:
+
+🚆 Bihar Railway Ticket Booking System
+
+I want to build this project NOW using only the Java concepts I have already learned.
+
+IMPORTANT:
+I have NOT learned JDBC yet.
+
+Therefore, DO NOT use:
+
+- JDBC
+- MySQL
+- Spring Boot
+- REST API
+- JPA/Hibernate
+- Spring Security
+- Any backend framework
+- Any advanced concept I haven't learned
+
+I want this to be a pure Java console-based project for Version 1.
+
+==================================================
+MY CURRENT JAVA KNOWLEDGE
+==================================================
+
+I already know:
+
+- Java basics
+- Variables and data types
+- if/else
+- loops
+- methods
+- arrays
+- Strings
+- OOP
+- Classes and Objects
+- Constructors
+- Encapsulation
+- Inheritance
+- Polymorphism
+- Interfaces
+- Collections Framework
+- ArrayList
+- HashMap
+- Exception Handling
+- File I/O
+- Serialization and Deserialization
+
+I am currently learning JDBC separately, but I don't want JDBC used in this project yet.
+
+==================================================
+PROJECT IDEA
+==================================================
+
+Build a console-based railway ticket booking system focused on Bihar.
+
+The user should be able to search for trains between two stations/districts, check train stoppages, check available seats, book tickets, view bookings, and cancel tickets.
+
+Example:
+
+User enters:
+
+From: Ara
+To: Madhubani
+
+The system should search through the available trains and determine which trains:
+
+1. Stop at Ara
+2. Stop at Madhubani
+3. Have Ara BEFORE Madhubani in their route
+4. Have available seats
+
+Then display matching trains.
+
+If no train is available:
+
+"Sorry! No train is available from Ara to Madhubani."
+
+==================================================
+IMPORTANT PROJECT LIMITATION
+==================================================
+
+This is NOT a real railway booking system.
+
+It is a learning project using a SAMPLE dataset.
+
+Do NOT claim that it provides:
+
+- Live train information
+- Live seat availability
+- Real-time railway schedules
+- Real ticket booking
+- Real Indian Railways data
+
+Initially create a small fictional/sample Bihar railway dataset.
+
+For example:
+
+Stations:
+
+- Ara
+- Patna
+- Buxar
+- Gaya
+- Chhapra
+- Muzaffarpur
+- Darbhanga
+- Madhubani
+- Hajipur
+- Samastipur
+
+Create around 5–10 sample trains.
+
+Each train should have multiple stoppages.
+
+==================================================
+CORE OBJECTS
+==================================================
+
+Create appropriate Java classes such as:
+
+1. Station
+2. Train
+3. Passenger
+4. Booking
+5. RailwaySystem
+6. FileManager
+7. Main
+
+You may suggest additional classes only if they are genuinely useful.
+
+Do NOT over-engineer the project.
+
+==================================================
+STATION
+==================================================
+
+A Station should contain information such as:
+
+- station code
+- station name
+- district
+
+Example:
+
+Ara
+ARA
+Bhojpur
+
+Patna
+PNBE
+Patna
+
+Madhubani
+MBI
+Madhubani
+
+==================================================
+TRAIN
+==================================================
+
+Each Train should contain:
+
+- train number
+- train name
+- route/stoppages
+- total seats
+- available seats
+
+Example:
+
+Train Number: 1001
+Train Name: Bihar Express
+
+Route:
+
+Ara
+↓
+Patna
+↓
+Hajipur
+↓
+Muzaffarpur
+↓
+Darbhanga
+↓
+Madhubani
+
+Total seats: 100
+
+Available seats: 100 initially.
+
+==================================================
+TRAIN STOPPAGES
+==================================================
+
+This is an important part of the project.
+
+A train can have multiple stoppages.
+
+Example:
+
+Train 1001:
+
+1. Ara
+2. Patna
+3. Hajipur
+4. Muzaffarpur
+5. Darbhanga
+6. Madhubani
+
+The order matters.
+
+If the user searches:
+
+Ara → Madhubani
+
+Train 1001 is valid.
+
+But if another train route is:
+
+Madhubani
+↓
+Darbhanga
+↓
+Muzaffarpur
+↓
+Patna
+↓
+Ara
+
+Then that train should NOT be considered valid for:
+
+Ara → Madhubani
+
+because Ara occurs after Madhubani in that train's route.
+
+==================================================
+TRAIN SEARCH
+==================================================
+
+The user should be able to search:
+
+From station
+To station
+
+Example:
+
+From: Ara
+To: Madhubani
+
+The system should:
+
+1. Search all trains.
+2. Check whether the train contains the source station.
+3. Check whether the train contains the destination station.
+4. Check the order of the two stations.
+5. Check whether seats are available.
+6. Display matching trains.
+
+Example output:
+
+========================================
+AVAILABLE TRAINS
+========================================
+
+Train No: 1001
+Train Name: Bihar Express
+From: Ara
+To: Madhubani
+Available Seats: 42
+
+Train No: 1005
+Train Name: Mithila Express
+From: Ara
+To: Madhubani
+Available Seats: 18
+
+========================================
+
+If no train matches:
+
+Sorry! No train is available from Ara to Madhubani.
+
+==================================================
+VIEW TRAIN STOPPAGES
+==================================================
+
+The user should be able to enter a train number.
+
+Example:
+
+Enter Train Number: 1001
+
+Output:
+
+Train: Bihar Express
+Train Number: 1001
+
+Stoppages:
+
+1. Ara
+2. Patna
+3. Hajipur
+4. Muzaffarpur
+5. Darbhanga
+6. Madhubani
+
+==================================================
+SEAT AVAILABILITY
+==================================================
+
+The user should be able to check the available seats of a train.
+
+Example:
+
+Train: Bihar Express
+Train Number: 1001
+
+Total Seats: 100
+Booked Seats: 58
+Available Seats: 42
+
+For Version 1, keep seat management simple.
+
+You can use sequential seat numbers:
+
+1, 2, 3, 4, ... 100
+
+Do NOT implement complex:
+
+- coaches
+- berths
+- AC classes
+- sleeper classes
+- RAC
+- waiting list
+
+unless we decide to add them later.
+
+==================================================
+PASSENGER
+==================================================
+
+Passenger should contain basic information:
+
+- passenger name
+- age
+- gender
+
+Example:
+
+Name: Priyanshu
+Age: 21
+Gender: Male
+
+Do not collect unnecessary personal information.
+
+==================================================
+BOOKING
+==================================================
+
+A booking should contain:
+
+- booking ID
+- passenger
+- train
+- source
+- destination
+- seat number
+- booking status
+
+Example:
+
+========================================
+TICKET BOOKED SUCCESSFULLY
+========================================
+
+Booking ID: B10001
+
+Passenger: Priyanshu
+Age: 21
+Gender: Male
+
+Train: Bihar Express
+Train Number: 1001
+
+From: Ara
+To: Madhubani
+
+Seat Number: 43
+
+Status: CONFIRMED
+
+========================================
+
+==================================================
+BOOKING LOGIC
+==================================================
+
+When a user books a ticket:
+
+1. Ask for source.
+2. Ask for destination.
+3. Search trains.
+4. Display matching trains.
+5. User selects a train.
+6. Check available seats.
+7. Ask passenger details.
+8. Assign a seat.
+9. Create a booking.
+10. Decrease available seats.
+11. Store the booking.
+12. Display the ticket.
+
+If there are no available seats:
+
+"Sorry! No seats are available on this train."
+
+==================================================
+BOOKING ID
+==================================================
+
+Generate a unique booking ID.
+
+Example:
+
+B10001
+B10002
+B10003
+
+The ID should be unique for each booking.
+
+==================================================
+CANCEL TICKET
+==================================================
+
+The user should be able to cancel a booking.
+
+Example:
+
+Enter Booking ID: B10001
+
+System:
+
+1. Find booking.
+2. Check whether it exists.
+3. Check whether it is already cancelled.
+4. Change status to CANCELLED.
+5. Make the seat available again.
+
+Output:
+
+Ticket B10001 cancelled successfully.
+
+Seat 43 is now available.
+
+If booking doesn't exist:
+
+"Booking not found."
+
+==================================================
+VIEW BOOKING
+==================================================
+
+The user should be able to enter a Booking ID.
+
+Example:
+
+Enter Booking ID: B10001
+
+Then display the complete booking information.
+
+If it doesn't exist:
+
+"Booking not found."
+
+==================================================
+VIEW ALL BOOKINGS
+==================================================
+
+The system should optionally allow the user to view all bookings.
+
+Example:
+
+========================================
+ALL BOOKINGS
+========================================
+
+B10001 | Priyanshu | Bihar Express | CONFIRMED
+B10002 | Rahul     | Mithila Express | CANCELLED
+B10003 | Aman      | Bihar Express | CONFIRMED
+
+==================================================
+MAIN MENU
+==================================================
+
+Create a console menu similar to:
+
+========================================
+      BIHAR RAILWAY BOOKING SYSTEM
+========================================
+
+1. Search Train
+2. View Train Stoppages
+3. Check Seat Availability
+4. Book Ticket
+5. View Booking
+6. View All Bookings
+7. Cancel Ticket
+8. Exit
+
+Enter your choice:
+
+The application should continue running until the user selects Exit.
+
+Use loops and exception handling to handle invalid input.
+
+==================================================
+DATA STORAGE
+==================================================
+
+Since I am NOT using JDBC/MySQL yet, use Java objects and collections.
+
+For example:
+
+ArrayList<Train> trains;
+ArrayList<Booking> bookings;
+
+You may use:
+
+- ArrayList
+- HashMap
+
+where appropriate.
+
+I have learned Serialization and Deserialization, so use serialization to persist important application data.
+
+For example:
+
+trains.dat
+bookings.dat
+
+When the program starts:
+
+.dat files
+↓
+Deserialization
+↓
+Java objects
+
+When the program exits or data changes:
+
+Java objects
+↓
+Serialization
+↓
+.dat files
+
+This means bookings should not disappear every time the program closes.
+
+==================================================
+FILE MANAGEMENT
+==================================================
+
+Create a FileManager/helper class responsible for:
+
+- saving trains
+- loading trains
+- saving bookings
+- loading bookings
+
+Use:
+
+ObjectOutputStream
+ObjectInputStream
+
+Handle:
+
+- FileNotFoundException
+- IOException
+- ClassNotFoundException
+- EOFException
+
+appropriately.
+
+Do not put all file-handling code inside Main.java.
+
+==================================================
+OOP REQUIREMENTS
+==================================================
+
+Use proper OOP.
+
+For example:
+
+Train
+Passenger
+Booking
+Station
+
+should be separate classes.
+
+Use:
+
+- private fields
+- constructors
+- getters/setters where appropriate
+- methods with meaningful names
+- encapsulation
+
+Avoid making everything static.
+
+Do not create unnecessary inheritance just to demonstrate inheritance.
+
+Use OOP because it makes the project cleaner.
+
+==================================================
+EXCEPTION HANDLING
+==================================================
+
+Handle invalid input gracefully.
+
+For example:
+
+If the user enters:
+
+abc
+
+when an integer is expected:
+
+Do not crash the program.
+
+Instead:
+
+"Invalid input. Please enter a number."
+
+Also handle:
+
+- invalid train number
+- invalid station
+- invalid booking ID
+- booking when no seats are available
+- cancellation of nonexistent booking
+- cancellation of already cancelled booking
+- source and destination being the same
+- source/destination not being on the train
+
+==================================================
+PROJECT STRUCTURE
+==================================================
+
+Start with a clean structure such as:
+
+BiharRailwayBooking/
+│
+├── src/
+│   └── com/
+│       └── priyanshu/
+│           └── railway/
+│               ├── Main.java
+│               ├── Station.java
+│               ├── Train.java
+│               ├── Passenger.java
+│               ├── Booking.java
+│               ├── RailwaySystem.java
+│               └── FileManager.java
+│
+├── data/
+│   ├── trains.dat
+│   └── bookings.dat
+│
+├── README.md
+└── .gitignore
+
+You may modify the structure if there is a better simple design.
+
+==================================================
+IMPORTANT DEVELOPMENT RULE
+==================================================
+
+DO NOT give me the complete project code at once.
+
+I want to build this project myself.
+
+Teach me step by step.
+
+Start with:
+
+STEP 1 — Project design
+
+Explain:
+
+- what classes we need
+- what each class is responsible for
+- how they interact
+
+Then let me create the classes.
+
+After I finish, move to the next step.
+
+==================================================
+HOW I WANT YOU TO TEACH
+==================================================
+
+Follow these rules strictly:
+
+1. One feature at a time.
+2. Explain the concept before code.
+3. Explain WHY we are doing something.
+4. Give me small tasks.
+5. Let me write the code.
+6. Review my code when I send it.
+7. Do NOT immediately rewrite my entire code.
+8. Point out what I did correctly.
+9. Point out mistakes and explain WHY they are mistakes.
+10. Give hints when I ask for hints.
+11. Give complete code only when I explicitly ask for it.
+12. Do not skip directly to advanced features.
+13. Don't introduce JDBC yet.
+14. Don't introduce Spring Boot yet.
+15. Don't introduce REST APIs yet.
+16. Don't over-engineer the project.
+
+==================================================
+GITHUB GOAL
+==================================================
+
+I want to eventually push this project to GitHub.
+
+Help me make it GitHub-worthy.
+
+Eventually I want:
+
+README.md containing:
+
+- Project title
+- Project description
+- Features
+- Technologies used
+- Project structure
+- How to run
+- Example screenshots/output
+- Future improvements
+
+Use meaningful Git commits.
+
+Examples:
+
+Initial project structure
+
+Add Station and Train classes
+
+Implement train search
+
+Implement booking functionality
+
+Add ticket cancellation
+
+Add serialization
+
+Add exception handling
+
+Improve project documentation
+
+Do NOT create meaningless commits just to increase GitHub contributions.
+
+==================================================
+FUTURE VERSION
+==================================================
+
+After I finish Version 1 and learn JDBC, I may upgrade this same project.
+
+Version 1:
+
+Java
+Collections
+File I/O
+Serialization
+Exception Handling
+
+↓
+
+Version 2:
+
+Java
+JDBC
+MySQL
+
+↓
+
+Version 3:
+
+Spring Boot
+REST API
+JPA/Hibernate
+
+But DO NOT implement these future versions now.
+
+==================================================
+FINAL GOAL
+==================================================
+
+I want to understand every part of this project well enough that if an interviewer asks:
+
+"Explain your project."
+
+I can explain:
+
+- Why I created it
+- How the classes are designed
+- How train searching works
+- How stoppages are checked
+- How seat availability works
+- How booking works
+- How cancellation works
+- How data is persisted
+- How serialization works
+- How exceptions are handled
+- Why I chose this architecture
+- What I would improve in Version 2
+
+START NOW.
+
+Begin with:
+
+"Step 1 — Project Architecture"
+
+Do not write the complete project.
+
+Help me build it step by step.
