@@ -79,4 +79,16 @@ public class RailwaySystem {
     public void addBooking(Booking booking){
         bookings.add(booking);
     }
+    public void updateNextBookingNumber(ArrayList<Booking> bookings) {
+
+        for(Booking booking : bookings) {
+            String id = booking.getBookingId();
+            if(id.startsWith("S")) {
+                int number = Integer.parseInt(id.substring(1));
+                if(number >= nextBookingNumber) {
+                    nextBookingNumber = number + 1;
+                }
+            }
+        }
+    }
 }
