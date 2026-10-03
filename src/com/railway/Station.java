@@ -1,5 +1,8 @@
 package com.railway;
-public class Station {
+
+import java.io.Serializable;
+
+public class Station implements Serializable {
     private String stationCode;
     private String stationName;
     private String district;

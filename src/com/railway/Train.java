@@ -1,7 +1,8 @@
 package com.railway;
 
+import java.io.Serializable;
 import  java.util.ArrayList;
-public class Train{
+public class Train implements Serializable {
     private int trainNumber;
     private String trainName;
     private ArrayList<Station> stoppages;

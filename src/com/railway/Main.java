@@ -7,33 +7,16 @@ public class Main {
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Station ara = new Station("ARA", "Ara", "Bhojpur");
-        Station patna = new Station("PNBE", "Patna", "Patna");
-        Station hajipur = new Station("HJP", "Hajipur", "Hajipur");
-        Station muzaffarpur = new Station("MFP", "Muzaffarpur", "Muzaffarpur");
-        Station darbhanga = new Station("DBG", "Darbhanga", "Darbhanga");
-        Station madhubani = new Station("MBI", "Madhubani", "Madhubani");
-
-        RailwaySystem railwaySystem = new RailwaySystem();
-        railwaySystem.addStation(madhubani);
-        railwaySystem.addStation(ara);
-        railwaySystem.addStation(patna);
-        railwaySystem.addStation(hajipur);
-        railwaySystem.addStation(muzaffarpur);
-        railwaySystem.addStation(darbhanga);
-
-        ArrayList<Station> stoppagesOfBiharExpreStations = new ArrayList<>();
-        stoppagesOfBiharExpreStations.add(ara);
-        stoppagesOfBiharExpreStations.add(muzaffarpur);
-        stoppagesOfBiharExpreStations.add(hajipur);
-        stoppagesOfBiharExpreStations.add(darbhanga);
-        stoppagesOfBiharExpreStations.add(madhubani);
-
-        Train biharExpress = new Train(1001, "Bihar Express", stoppagesOfBiharExpreStations, 400);
-        railwaySystem.addTrain(biharExpress);
-        bookTicket(railwaySystem);
-        
-
+        RailwaySystem railwaySystem = new RailwaySystem();    
+        FileManager fileManager = new FileManager();
+        fileManager.loadStations(railwaySystem);
+        fileManager.loadTrains(railwaySystem);
+        // bookTicket(railwaySystem);
+        ArrayList<Booking> savedBookings = fileManager.loadBooking();
+        for(Booking booking : savedBookings){
+            railwaySystem.addBooking(booking);
+            System.out.println(booking.getPassenger().getName());
+        }
     }
 
     private static void bookTicket(RailwaySystem railwaySystem) {
@@ -81,10 +64,10 @@ public class Main {
 
                 System.out.print("Enter passenger age: ");
                 int age = sc.nextInt();
-                
-                if(age<0){
+
+                if (age < 0) {
                     System.out.println("Invalid age");
-                    return ;
+                    return;
                 }
 
                 sc.nextLine();
@@ -95,16 +78,18 @@ public class Main {
                 Passenger passenger = new Passenger(name, age, gender);
 
                 int seatNumber = selectedTrain.assignSeatNumber();
-                if(seatNumber == -1){
+                if (seatNumber == -1) {
                     System.out.println("Something went wrong");
-                    return ;
+                    return;
                 }
-                String bookingId = railwaySystem.getBookingId();      
+                String bookingId = railwaySystem.getBookingId();
                 String bookingStatus = "Confirmed";
-                
-                Booking booking = new Booking(bookingId, passenger, selectedTrain, source, destination, seatNumber, bookingStatus);
+
+                Booking booking = new Booking(bookingId, passenger, selectedTrain, source, destination, seatNumber,
+                        bookingStatus);
 
                 railwaySystem.addBooking(booking);
+                FileManager.saveBooking(booking);
                 printTicket(booking);
 
             }
@@ -138,38 +123,39 @@ public class Main {
             System.out.println(station.getStationCode() + " | " + station.getStationName());
         }
     }
+
     private static void printTicket(Booking booking) {
 
-    System.out.println();
-    System.out.println("============================================================");
-    System.out.println("                  BIHAR RAILWAY");
-    System.out.println("                    E-TICKET");
-    System.out.println("============================================================");
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("                  BIHAR RAILWAY");
+        System.out.println("                    E-TICKET");
+        System.out.println("============================================================");
 
-    System.out.println();
-    System.out.println("  Booking ID     : " + booking.getBookingId());
-    System.out.println("  Status         : " + booking.getBookingStatus());
+        System.out.println();
+        System.out.println("  Booking ID     : " + booking.getBookingId());
+        System.out.println("  Status         : " + booking.getBookingStatus());
 
-    System.out.println("------------------------------------------------------------");
+        System.out.println("------------------------------------------------------------");
 
-    System.out.println("  Passenger Details");
-    System.out.println("  Name           : " + booking.getPassenger().getName());
-    System.out.println("  Age            : " + booking.getPassenger().getAge());
-    System.out.println("  Gender         : " + booking.getPassenger().getGender());
+        System.out.println("  Passenger Details");
+        System.out.println("  Name           : " + booking.getPassenger().getName());
+        System.out.println("  Age            : " + booking.getPassenger().getAge());
+        System.out.println("  Gender         : " + booking.getPassenger().getGender());
 
-    System.out.println("------------------------------------------------------------");
+        System.out.println("------------------------------------------------------------");
 
-    System.out.println("  Journey Details");
-    System.out.println("  Train No.      : " + booking.getTrain().getTrainNumber());
-    System.out.println("  Train Name     : " + booking.getTrain().getTrainName());
-    System.out.println("  From           : " + booking.getSource().getStationName());
-    System.out.println("  To             : " + booking.getDestination().getStationName());
-    System.out.println("  Seat No.       : " + booking.getSeatNumber());
+        System.out.println("  Journey Details");
+        System.out.println("  Train No.      : " + booking.getTrain().getTrainNumber());
+        System.out.println("  Train Name     : " + booking.getTrain().getTrainName());
+        System.out.println("  From           : " + booking.getSource().getStationName());
+        System.out.println("  To             : " + booking.getDestination().getStationName());
+        System.out.println("  Seat No.       : " + booking.getSeatNumber());
 
-    System.out.println("------------------------------------------------------------");
-    System.out.println("  Thank you for booking with Bihar Railway!");
-    System.out.println("  Please keep your Booking ID for future reference.");
-    System.out.println("============================================================");
-}
+        System.out.println("------------------------------------------------------------");
+        System.out.println("  Thank you for booking with Bihar Railway!");
+        System.out.println("  Please keep your Booking ID for future reference.");
+        System.out.println("============================================================");
+    }
 
 }

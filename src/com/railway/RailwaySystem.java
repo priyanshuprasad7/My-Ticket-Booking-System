@@ -40,6 +40,9 @@ public class RailwaySystem {
         }
         return null;
     }
+    public ArrayList<Booking> getBookings() {
+        return bookings;
+    }
 
     public  ArrayList<Train> searchTrain(Station source, Station destination) {
         ArrayList<Train> matchingTrains = new ArrayList<>();

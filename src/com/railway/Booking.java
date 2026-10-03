@@ -1,5 +1,9 @@
 package com.railway;
-public class Booking {
+
+import java.io.Serializable;
+
+public class Booking implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Passenger passenger;
     private String bookingId;
     private Train train;

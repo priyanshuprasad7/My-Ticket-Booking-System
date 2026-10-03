@@ -1,5 +1,8 @@
 package com.railway;
-public class Passenger{
+
+import java.io.Serializable;
+
+public class Passenger implements Serializable{
     private String name ;
     private int age ;
     private String gender;
