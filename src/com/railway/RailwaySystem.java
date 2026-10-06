@@ -43,33 +43,42 @@ public class RailwaySystem {
     public ArrayList<Booking> getBookings() {
         return bookings;
     }
+    public Station findStationByCode ( String stationCode) {
 
-    public  ArrayList<Train> searchTrain(Station source, Station destination) {
-        ArrayList<Train> matchingTrains = new ArrayList<>();
-        for (Train train : trains) {
-            boolean sourceFound = false;
-            boolean destinationFound = false;
-            int sourceIndex = -1;
-            int destinationIndex = -1;
-            ArrayList<Station> ListOfStoppages = train.getStoppages();
-            for (int i = 0; i < ListOfStoppages.size(); i++) {
-                Station station = ListOfStoppages.get(i);
-
-                if (source.getStationName().equalsIgnoreCase(station.getStationName())) {
-                    sourceIndex = i;
-                    sourceFound = true;
-                }
-                if (destination.getStationName().equalsIgnoreCase(station.getStationName())) {
-                    destinationIndex = i;
-                    destinationFound = true;
-                }
-            }
-            if (sourceFound && destinationFound && sourceIndex < destinationIndex) {
-                matchingTrains.add(train);
+        for(Station station : stations) {
+            if(station.getStationCode().equalsIgnoreCase(stationCode)){
+                return station;
             }
         }
-        return matchingTrains;
+        return null;
     }
+
+    // public  ArrayList<Train> searchTrain(Station source, Station destination) {
+    //     ArrayList<Train> matchingTrains = new ArrayList<>();
+    //     for (Train train : trains) {
+    //         boolean sourceFound = false;
+    //         boolean destinationFound = false;
+    //         int sourceIndex = -1;
+    //         int destinationIndex = -1;
+    //         ArrayList<Station> ListOfStoppages = train.getStoppages();
+    //         for (int i = 0; i < ListOfStoppages.size(); i++) {
+    //             Station station = ListOfStoppages.get(i);
+
+    //             if (source.getStationName().equalsIgnoreCase(station.getStationName())) {
+    //                 sourceIndex = i;
+    //                 sourceFound = true;
+    //             }
+    //             if (destination.getStationName().equalsIgnoreCase(station.getStationName())) {
+    //                 destinationIndex = i;
+    //                 destinationFound = true;
+    //             }
+    //         }
+    //         if (sourceFound && destinationFound && sourceIndex < destinationIndex) {
+    //             matchingTrains.add(train);
+    //         }
+    //     }
+    //     return matchingTrains;
+    // }
     public String getBookingId() {
         String bookingId = "S" + nextBookingNumber;
         nextBookingNumber++;
@@ -89,6 +98,44 @@ public class RailwaySystem {
                     nextBookingNumber = number + 1;
                 }
             }
+        }
+    }
+    public void printAllTrains() {
+
+        if (trains.isEmpty()) {
+            System.out.println("No trains available.");
+            return;
+        }
+
+        System.out.println("\n\n==================== ALL TRAINS ====================\n");
+
+        for (Train train : trains) {
+
+            System.out.println("Train No.  : " + train.getTrainNumber());
+            System.out.println("Train Name : " + train.getTrainName());
+            System.out.println("Total Seats: " + train.getTotalSeats());
+            System.out.println("Available  : " + train.getAvailableSeats());
+
+            System.out.println("-----------------------------------------------");
+            System.out.printf(
+                "%-20s %-15s %-15s%n",
+                "Station",
+                "Arrival",
+                "Departure"
+            );
+            System.out.println("-----------------------------------------------");
+
+            for (Stoppage stoppage : train.getStoppages()) {
+
+                System.out.printf(
+                    "%-20s %-15s %-15s%n",
+                    stoppage.getStation().getStationName(),
+                    stoppage.getArrivalTime(),
+                    stoppage.getDepartureTime()
+                );
+            }
+
+            System.out.println("================================================\n");
         }
     }
 }

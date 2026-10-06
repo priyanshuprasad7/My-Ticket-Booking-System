@@ -5,12 +5,12 @@ import  java.util.ArrayList;
 public class Train implements Serializable {
     private int trainNumber;
     private String trainName;
-    private ArrayList<Station> stoppages;
+    private ArrayList<Stoppage> stoppages;
     private int totalSeats;
     private int availableSeats;
     private int nextSeatNumber = 1;
 
-    public Train(int trainNumber , String trainName , ArrayList<Station>stoppages, int totalSeats){
+    public Train(int trainNumber , String trainName , ArrayList<Stoppage>stoppages, int totalSeats){
         this.trainNumber = trainNumber;
         this.trainName = trainName;
         this.stoppages = stoppages;
@@ -25,7 +25,7 @@ public class Train implements Serializable {
         return trainName;
     }
 
-    public ArrayList<Station> getStoppages() {
+    public ArrayList<Stoppage> getStoppages() {
         return stoppages;
     }
 

@@ -8,94 +8,96 @@ public class Main {
 
     public static void main(String[] args) {
         RailwaySystem railwaySystem = new RailwaySystem();    
-        FileManager fileManager = new FileManager();
-        fileManager.loadStations(railwaySystem);
-        fileManager.loadTrains(railwaySystem);
+        // FileManager fileManager = new FileManager();
+        // FileManager.loadStations(railwaySystem);
+        // FileManager.loadTrains(railwaySystem);
+        railwaySystem.printAllTrains();
+        // fileManager.loadTrains(railwaySystem);
         // bookTicket(railwaySystem);
-        ArrayList<Booking> savedBookings = fileManager.loadBooking();
-        for(Booking booking : savedBookings){
-            railwaySystem.addBooking(booking);
-            System.out.println(booking.getPassenger().getName());
-        }
+        // ArrayList<Booking> savedBookings = fileManager.loadBooking();
+        // for(Booking booking : savedBookings){
+        //     railwaySystem.addBooking(booking);
+        //     System.out.println(booking.getPassenger().getAge());
+        // }
     }
 
-    private static void bookTicket(RailwaySystem railwaySystem) {
+    // private static void bookTicket(RailwaySystem railwaySystem) {
 
-        System.out.println("Good morning sir");
-        System.out.print("Enter Your source : ");
-        String src = sc.nextLine();
-        System.out.print("Enter Your destination : ");
-        String dest = sc.nextLine();
-        Station source = railwaySystem.findStationByName(src);
-        Station destination = railwaySystem.findStationByName(dest);
-        if (source == null || destination == null) {
-            System.out.println("Invalid source or destination station.");
-        } else {
-            ArrayList<Train> availableTrains = railwaySystem.searchTrain(source, destination);
+    //     System.out.println("Good morning sir");
+    //     System.out.print("Enter Your source : ");
+    //     String src = sc.nextLine();
+    //     System.out.print("Enter Your destination : ");
+    //     String dest = sc.nextLine();
+    //     Station source = railwaySystem.findStationByName(src);
+    //     Station destination = railwaySystem.findStationByName(dest);
+    //     if (source == null || destination == null) {
+    //         System.out.println("Invalid source or destination station.");
+    //     } else {
+    //         ArrayList<Train> availableTrains = railwaySystem.searchTrain(source, destination);
 
-            for (Train train : availableTrains) {
-                System.out.println(" " + train.getTrainNumber() + " | " + train.getTrainName() +
-                        " | Available seats :  " + train.getAvailableSeats());
-            }
+    //         for (Train train : availableTrains) {
+    //             System.out.println(" " + train.getTrainNumber() + " | " + train.getTrainName() +
+    //                     " | Available seats :  " + train.getAvailableSeats());
+    //         }
 
-            System.out.println("Enter the train Number to book: ");
-            int trainNumber = sc.nextInt();
-            sc.nextLine();
+    //         System.out.println("Enter the train Number to book: ");
+    //         int trainNumber = sc.nextInt();
+    //         sc.nextLine();
 
-            Train selectedTrain = null;
-            for (Train train : availableTrains) {
-                if (train.getTrainNumber() == trainNumber) {
-                    selectedTrain = train;
-                    break;
-                }
-            }
-            if (selectedTrain == null) {
-                System.out.println("Invalid Train Selection");
-            } else {
-                System.out.println("Your train Selection is " + selectedTrain.getTrainNumber()
-                        + " " + selectedTrain.getTrainName());
-            }
+    //         Train selectedTrain = null;
+    //         for (Train train : availableTrains) {
+    //             if (train.getTrainNumber() == trainNumber) {
+    //                 selectedTrain = train;
+    //                 break;
+    //             }
+    //         }
+    //         if (selectedTrain == null) {
+    //             System.out.println("Invalid Train Selection");
+    //         } else {
+    //             System.out.println("Your train Selection is " + selectedTrain.getTrainNumber()
+    //                     + " " + selectedTrain.getTrainName());
+    //         }
 
-            if (selectedTrain.getAvailableSeats() <= 0) {
-                System.out.println("Sorry , no seats left");
-            } else {
-                System.out.print("Enter passenger name: ");
-                String name = sc.nextLine();
+    //         if (selectedTrain.getAvailableSeats() <= 0) {
+    //             System.out.println("Sorry , no seats left");
+    //         } else {
+    //             System.out.print("Enter passenger name: ");
+    //             String name = sc.nextLine();
 
-                System.out.print("Enter passenger age: ");
-                int age = sc.nextInt();
+    //             System.out.print("Enter passenger age: ");
+    //             int age = sc.nextInt();
 
-                if (age < 0) {
-                    System.out.println("Invalid age");
-                    return;
-                }
+    //             if (age < 0) {
+    //                 System.out.println("Invalid age");
+    //                 return;
+    //             }
 
-                sc.nextLine();
+    //             sc.nextLine();
 
-                System.out.print("Enter passenger gender: ");
-                String gender = sc.nextLine();
+    //             System.out.print("Enter passenger gender: ");
+    //             String gender = sc.nextLine();
 
-                Passenger passenger = new Passenger(name, age, gender);
+    //             Passenger passenger = new Passenger(name, age, gender);
 
-                int seatNumber = selectedTrain.assignSeatNumber();
-                if (seatNumber == -1) {
-                    System.out.println("Something went wrong");
-                    return;
-                }
-                String bookingId = railwaySystem.getBookingId();
-                String bookingStatus = "Confirmed";
+    //             int seatNumber = selectedTrain.assignSeatNumber();
+    //             if (seatNumber == -1) {
+    //                 System.out.println("Something went wrong");
+    //                 return;
+    //             }
+    //             String bookingId = railwaySystem.getBookingId();
+    //             String bookingStatus = "Confirmed";
 
-                Booking booking = new Booking(bookingId, passenger, selectedTrain, source, destination, seatNumber,
-                        bookingStatus);
+    //             Booking booking = new Booking(bookingId, passenger, selectedTrain, source, destination, seatNumber,
+    //                     bookingStatus);
 
-                railwaySystem.addBooking(booking);
-                FileManager.saveBooking(booking);
-                printTicket(booking);
+    //             railwaySystem.addBooking(booking);
+    //             FileManager.saveBooking(booking);
+    //             printTicket(booking);
 
-            }
+    //         }
 
-        }
-    }
+    //     }
+    // }
 
     private static void printStaionInformation(RailwaySystem railwaySystem) {
 
@@ -107,15 +109,15 @@ public class Main {
         }
     }
 
-    private static void printTrainInformation(RailwaySystem railwaySystem) {
-        for (Train train : railwaySystem.getTrains()) {
-            System.out.println("Train No. : " + train.getTrainNumber()
-                    + " " + train.getTrainName());
-            printTrainStoppages(train.getStoppages());
-            System.out.println(
-                    "Total seats : " + train.getTotalSeats() + " ||  Available seats : " + train.getAvailableSeats());
-        }
-    }
+    // private static void printTrainInformation(RailwaySystem railwaySystem) {
+    //     for (Train train : railwaySystem.getTrains()) {
+    //         System.out.println("Train No. : " + train.getTrainNumber()
+    //                 + " " + train.getTrainName());
+    //         printTrainStoppages(train.getStoppages());
+    //         System.out.println(
+    //                 "Total seats : " + train.getTotalSeats() + " ||  Available seats : " + train.getAvailableSeats());
+    //     }
+    // }
 
     private static void printTrainStoppages(ArrayList<Station> stoppages) {
         System.out.println("Stoppages are");
